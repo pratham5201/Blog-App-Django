@@ -1,0 +1,19 @@
+<!-- myblog/templates/myblog/category_list.html -->
+
+{% extends 'myblog/base.html' %}
+
+{% block content %}
+  <div class="container mt-5">
+    <h2 class="mb-4">Categories</h2>
+    <ul class="list-group">
+      {% for category in categories %}
+        <li class="list-group-item">
+          {{ category.name }}
+          <a href="{% url 'category_update' pk=category.pk %}" class="btn btn-sm btn-warning float-right ml-2">Update</a>
+          <a href="{% url 'category_delete' pk=category.pk %}" class="btn btn-sm btn-danger float-right">Delete</a>
+        </li>
+      {% endfor %}
+    </ul>
+    <a href="{% url 'category_create' %}" class="btn btn-primary mt-3">Create Category</a>
+  </div>
+{% endblock %}

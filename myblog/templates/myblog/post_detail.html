@@ -1,0 +1,52 @@
+<!-- myblog/templates/myblog/post_detail.html -->
+
+{% extends 'myblog/base.html' %}
+{% load static %}
+<!-- myblog/templates/myblog/post_detail.html -->
+
+
+
+{% block content %}
+  <div class="container mt-5">
+    <div class="card mb-4">
+      <div class="card-body">
+        <h2 class="card-title">{{ post.title }}</h2>
+        <p class="card-text">{{ post.content }}</p>
+        <p class="card-text"><small class="text-muted">Posted by {{ post.author.username }} on {{ post.pub_date }}</small></p>
+        {% if user == post.author %}
+          <a href="{% url 'post_delete' pk=post.pk %}">Delete Post</a>
+        {% endif %}
+      </div>
+    </div>
+
+    <!-- Display Comments -->
+    <div class="card">
+      <div class="card-body">
+        <h4 class="card-title">Comments</h4>
+        {% for comment in comments %}
+          <div class="media mb-3">
+            {% load static %}
+            <img src="{% static 'path_to_user_profile_image.jpg' %}" class="mr-3 rounded-circle" alt="User Image" width="64" height="64">
+            <div class="media-body">
+              <h6 class="mt-0">{{ comment.author.username }}</h6>
+              <p>{{ comment.text }}</p>
+              {% if user == comment.author %}
+                <a href="{% url 'comment_delete' pk=comment.pk %}">Delete Comment</a>
+              {% endif %}
+              <p class="text-muted">{{ comment.created_date }}</p>
+            </div>
+          </div>
+        {% endfor %}
+
+        <!-- Comment Form -->
+        <h5 class="mt-4">Add a Comment</h5>
+        <form method="post" action="{% url 'comment_create' post_pk=post.pk %}">
+            {% csrf_token %}
+            {{ comment_form.as_p }}
+            <button type="submit" class="btn btn-primary">Post Comment</button>
+        </form>
+        
+      </div>
+    </div>
+  </div>
+{% endblock %}

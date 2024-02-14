@@ -1,0 +1,19 @@
+<!-- myblog/templates/myblog/tag_list.html -->
+
+{% extends 'myblog/base.html' %}
+
+{% block content %}
+  <div class="container mt-5">
+    <h2 class="mb-4">Tags</h2>
+    <ul class="list-group">
+      {% for tag in tags %}
+        <li class="list-group-item">
+          {{ tag.name }}
+          <a href="{% url 'tag_update' pk=tag.pk %}" class="btn btn-sm btn-warning float-right ml-2">Update</a>
+          <a href="{% url 'tag_delete' pk=tag.pk %}" class="btn btn-sm btn-danger float-right">Delete</a>
+        </li>
+      {% endfor %}
+    </ul>
+    <a href="{% url 'tag_create' %}" class="btn btn-primary mt-3">Create Tag</a>
+  </div>
+{% endblock %}
