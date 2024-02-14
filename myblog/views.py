@@ -49,12 +49,12 @@ def post_create(request):
             post.save()
 
             # Trigger WebSocket update
-            channel_layer = get_channel_layer()
-            async_to_sync(channel_layer.group_send)(
-                "post_group", {"type": "post_update", "message": "New post created"}
-            )
+            # channel_layer = get_channel_layer()
+            # async_to_sync(channel_layer.group_send)(
+            #     "post_group", {"type": "post_update", "message": "New post created"}
+            # )
 
-            messages.success(request, 'Post created successfully.')
+            # messages.success(request, 'Post created successfully.')
             return redirect('post_list')
     else:
         form = PostForm()
@@ -161,13 +161,13 @@ def comment_create(request, post_pk):
             comment.author = request.user
             comment.save()
 
-            # Trigger WebSocket update
-            channel_layer = get_channel_layer()
-            async_to_sync(channel_layer.group_send)(
-                f"post_{post_pk}_group", {"type": "comment_update", "message": "New comment created"}
-            )
+            # # Trigger WebSocket update
+            # channel_layer = get_channel_layer()
+            # async_to_sync(channel_layer.group_send)(
+            #     f"post_{post_pk}_group", {"type": "comment_update", "message": "New comment created"}
+            # )
 
-            messages.success(request, 'Comment created successfully.')
+            # messages.success(request, 'Comment created successfully.')
             return redirect('post_detail', pk=post_pk)
     else:
         form = CommentForm()
