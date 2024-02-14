@@ -1,4 +1,4 @@
-# Room-Chat sample application
+# My Blog application
 
 ## Setup
 
